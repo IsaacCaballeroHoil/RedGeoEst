@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>RGT</title>
+    <link rel="shortcut icon" href="favicon.png">
+    <link rel="stylesheet" href="package/css/index.css" />
+       <!-- <link rel="stylesheet" href="index2.css" /> -->
+
+   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous"> -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+   <!-- <link href="../pack/css/bootstrap.css" rel="stylesheet" type="text/css"> -->
+   <!-- Aquí agregamos JQUERY (JS no es JQUERY con JQUERY te da acceso a las funciones que empiezan con $)-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+   <!-- nuevo  -->
+   <script src="https://kit.fontawesome.com/f147850611.js" crossorigin="anonymous"></script>
+
+  </head>
+  <body>
+
+
+
+    <style>
+      .offcanvas-end{
+width: 550px;
+background-color: #a8dadc;
+}
+
+    .chartdivtwe {
+  height: 700px;
+}
+
+.portada {
+  height: 100vh;
+  width: 100%;
+  /*background-image: url("fondopc1.jpg");*/
+  background-image: url("package/img/fondopc9.jpg");
+  background-size: cover;
+}
+
+.girarimag {
+animation-name: girarb;
+animation-duration: 20s;
+animation-iteration-count: infinite;
+animation-timing-function: linear;
+display: inline-block;
+
+}
+
+
+@keyframes girarb {
+  from{
+    transform: rotate(360deg);
+
+  } to {
+    transform: rotate(0deg);
+  }
+}
+    </style>
+
+ <!--    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#offcanvastable">
+lunch
+</button> -->
+ <!-- <div id="chartdivtweets"></div> -->
+<!--  modal primer cuadro -->
+
+
+
+
+<div class="modal fade" id="modalBusqueda" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ingresa un nombre</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body"> 
+                
+                <p class="text-center">@<input type="text" name="user" required></p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-primary btn-lg" data-send required>Buscar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<!-- modal para range -->
+<div class="modal fade" id="modal_twets_opcion" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Con cuantos Tweets quiere trabajar ?</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+         <h4 class="text-center"># <output id="valor_rango" for="rango">5</output></h4>
+        <!-- <label for="rango" class="form-label">  </label> -->
+<input oninput="valor_rango.value=Number(rango.value).toLocaleString('es-ES')" type="range" class="form-range" min="1" max="30" step="1" id="rango" value="3">
+<p><span id="total"></span></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-lg btn-primary" data-t7d>Tweets ultimos 7 dias</button>
+        <button type="button" class="btn btn-lg btn-primary" data-t30d>Tweets mas popuilares</button>
+
+
+        <!-- <li><button class="dropdown-item" type="button" data-t7d>Tweets ultimos 7 dias</button></li>
+    <li><button class="dropdown-item" type="button" data-t30d>Tweets mas popuilares</button></li> -->
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- offcanvas de grafic taablaaa-->
+<div class="offcanvas offcanvas-end"  data-bs-dismiss="offcanvas" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="offcanvastable" aria-labelledby="offcanvasScrollingLabel">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title " id="offcanvasScrollingLabel">Detalles de la cuenta</h5>
+    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+    <div class="table-responsive">
+  <table class="table table-primary text-center">
+  <thead>
+     <tr >  
+      <th class="justify-content-center " colspan="4"><a id="refximg" target="_blank" href="#"><img class="bd-placeholder-img rounded-circle" id="myImg" src="" style="width: 200px; margin: auto;"/></a></th>
+    </tr> 
+    <tr>
+      <th colspan="4" scope="col"> <div id="jname"><label id="lbjname">test</label></div></th>
+    </tr>
+    <tr>
+      <th colspan="4" scope="col"><div id="jtiporela"><label id="lbjtiporela">test</label></div></th>
+    </tr>
+   
+  </thead>
+  <tbody>
+    <!-- <tr>
+      <th rowspan="6"><a id="refximg" target="_blank" href="#"><img id="myImg" src="" style="width: 200px; margin: auto;"/></a></th>
+    </tr>  -->
+    <tr>
+      <td class="fs-4" ><div id="jfollwers"><label id="lbjfollwers">test</label></div></td>
+      <th class="text-start fs-4" scope="row">Seguidores</th>
+      <td class="fs-4" ><div id="jfriends"><label id="lbjfriends">test</label></div></td>
+      <th class="text-start fs-4" scope="row">Seguidos</th>
+    </tr>
+    <tr>
+      
+    </tr>
+    <tr>
+      <th class="text-end" scope="row"><i class="fa-sharp fa-solid fa-location-dot fa-2x"></i></th>
+     <td class="text-start" colspan="3" ><div id="jlocation"><label id="lbjlocation"> test</label></div></td>
+    </tr>
+    <tr>
+      <th class="text-end" scope="row"><i class="fa-sharp fa-solid fa-calendar fa-2x"></i></th>
+     <td class="text-start" colspan="3" ><div id="jfecha"><label id="lbjfecha"> test</label></div></td>
+    </tr>
+    <tr>
+    <tr>
+      <th class="text-end" scope="row"><i class="fa-sharp fa-solid fa-database fa-2x"></i></th>
+      <td class="text-start" colspan="3"><div id="jdaterecord"><label id="lbjdaterecord"> test</label></div></td>
+    </tr>
+    <tr>
+      <!-- <th scope="row"></th> -->
+      <td colspan="4"> </td>
+    </tr>
+    <tr>
+      <th class="text-center" scope="row"># interacciones</th>
+      <td colspan="3"><div id="jstatus_count"><label id="lbjstatus_count"> test</label></div></td>
+    </tr>    
+    <tr>
+      <!-- <th scope="row">Texto</th> -->
+      <td colspan="4" ><div id="jendtweet"><label id="lbjendtweet">test</label></div></td>
+    </tr>
+    <tr>
+      <!-- <th scope="row">Fecha</th> -->
+      <td class="text-end" colspan="4"><div id="jdatetweet"><label id="lbjdatetweet">test</label></div></td>
+    </tr>
+     <!-- <tr>
+      <th scope="col"><div id="jfecha"><label id="lbjfecha">test</label></div></th>
+    </tr> -->
+
+  </tbody>
+</table>
+
+</div>
+    <div class="row">
+      <div class="col-md-6 ml-auto"><div id="jrt"><h1 id="lbjrt">rt</h1></div></div>
+
+      <div class="col-md-6 ml-auto"><div id="jlike"><h1 id="lbjlike" class="text-end">like</h1></div></div>
+    </div>
+        <div class="chartdivams" id="chartdivmodal"></div>
+
+  <div class="dropdown text-end">
+  <button class="btn btn-lg btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+   Acciones
+  </button>
+  <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2">
+    <li><button class="dropdown-item" type="button" data-update >Actualizar registro</button></li>
+    <li><hr class="dropdown-divider"></li> 
+    <li><button class="dropdown-item" type="button" btn-run-modal >Generar tweets</button></li> 
+    <!-- <li><button class="dropdown-item" type="button" data-t7d>Tweets ultimos 7 dias</button></li>
+    <li><button class="dropdown-item" type="button" data-t30d>Tweets mas popuilares</button></li> -->
+    <li><hr class="dropdown-divider"></li>
+        <!-- <button class="btn-primary btn-lg" data-send required>Buscar</button> -->
+    <li><button class="dropdown-item" data-send2 >seguidos y seguidores</button></li>
+    <!-- <li><button type="button" class="btn btn-lg btn-secondary">Actualizar </button></li> -->
+  </ul>
+  <button type="button" class="btn btn-lg btn-secondary" data-bs-dismiss="offcanvas">Cerrar</button>
+</div>
+  </div>
+</div>
+
+
+<!-- navbar -->
+<div class="collapse" id="modalmenunav">
+  <div class="bg-dark p-4">
+    <div class="row d-flex align-items-center">
+      <div class="col">
+        <a class="nav-justified" href="https://www.centrogeo.org.mx">
+          <img src="package/img/centrogeo2.png" width="120" height="120" class="d-inline-block align-top" alt=""> </a>
+      </div>
+      <div class="col">
+        <ul class="ms-auto nav">
+            <li class="nav-item">
+                <button type="button" class="btn btn-lg btn-dark btn-block" data-bs-toggle="modal" data-bs-target="#modalBusqueda">
+             start</button>
+              </li>
+              <li class="nav-item">
+                <button type="button" class="btn btn-lg btn-dark btn-block" data-bs-toggle="modal" data-bs-target="#modalproyecto">
+                  Acerca del proyecto </button>
+              </li>
+              <li class="nav-item">
+                <button type="button" class="btn btn-lg btn-dark btn-block" data-bs-toggle="modal" data-bs-target="#modalnosotros">
+              Acerca de nosotros </button>
+              </li>
+        </ul>
+      </div>
+  </div>
+</div>
+</div>
+<nav class="navbar navbar-dark bg-dark">
+  <div class="container-fluid">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#modalmenunav" aria-controls="modalmenunav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  </div>
+</nav>
+<!-- portadaaa -->
+<div id ="elimnado" class="portada text-center D-flex">
+  <div class="row align-items-end">
+    <div  class="col-md-8 ">
+             
+          <div class="" >
+             <div class="container">
+<style type="text/css">
+  svg {
+    display: block; font: 10.5em 'Montserrat';    width: 960px;    height: 300px;    margin: 0 auto;
+}
+.text-copy {
+    fill: none;    stroke: white;    stroke-dasharray: 6% 29%;    stroke-width: 5px;
+    stroke-dashoffset: 0%;    animation: stroke-offset 5.5s infinite linear;
+}
+.text-copy:nth-child(1){
+  stroke: #caf0f8;  animation-delay: -1;
+}
+.text-copy:nth-child(2){
+  stroke: #03045e;  animation-delay: -2s;
+}
+.text-copy:nth-child(3){
+  stroke: #0077b6;  animation-delay: -3s;
+}
+.text-copy:nth-child(4){
+  stroke: #90e0ef;  animation-delay: -4s;
+}
+.text-copy:nth-child(5){
+  stroke: #00b4d8;  animation-delay: -5s;
+}
+.text:nth-child(5n + 6) {
+/*   stroke: #3AA1BF; */
+  /*  6*/
+  stroke: #466c8;  -webkit-animation-delay: -7.5s;  animation-delay: -7.5s;
+}
+@keyframes stroke-offset{
+  100% {stroke-dashoffset: -35%;}
+}
+</style>
+              <svg id="#efectonuevto" viewBox="0 0 960 300">
+    <symbol id="s-text">
+      <text text-anchor="middle" x="50%" y="80%">RedGeoTwit</text>
+    </symbol>
+ <g id="#efectonuevto" class = "g-ants">
+      <use xlink:href="#s-text" class="text-copy"></use>
+      <use xlink:href="#s-text" class="text-copy"></use>
+      <use xlink:href="#s-text" class="text-copy"></use>
+      <use xlink:href="#s-text" class="text-copy"></use>
+      <use xlink:href="#s-text" class="text-copy"></use>
+   <use xlink:href="#s-text" class="text-copy"></use>
+   
+    </g>
+  </svg>
+            </div>
+           <!--  <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvastable" aria-controls="offcanvasExample">
+  offcanvas
+</button> -->
+
+              <h3 class="display-3 text-secondary" style="color: white;">Funciona con: 
+                      <span
+                         class="txt-rotate"
+                         data-period="2000"
+     data-rotate='[ "Amcharts.", "Boostrap5.", "Axios.", "Ajax.", "Javascript.", "PHP." ]'></span>
+              </h3>
+             <!--  <h3><span class="txt anim-text-flow">texto de prueba</span></h3> -->
+          </div>
+    </div>
+    <div class="col-6 col-md-4">
+      <img class="girarimag" src="package/img/esferasinfondo.png" alt="">
+
+    </div>
+  </div>
+</div>
+
+
+<div class="chartdivams portada" id="chartdivtree2"></div>
+
+<div class="portada collapse" id="modalimage">
+<img src="package/img/ejemplo1.jpg" class="rounded mx-auto d-block" alt="">
+</div>
+
+
+
+<div class="modal fade" id="modaltweets" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <!--modal-xl   -->
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" >Conjunto Tweets</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="chartdivtwe modal-body"> 
+        <!-- aqui va gfafica -->
+        <div class="chartdivtwe" id="chartdivtweets"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal_twets_opcion">
+  Launch demo modal
+</button> -->
+
+
+
+
+<!-- jsscripts  -->
+<link rel="stylesheet" href="funciones/jquery.loadingModal.css"></link>
+      <script src="funciones/jquery.loadingModal.js"></script>
+
+      <!-- para grafos -->
+  <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF" crossorigin="anonymous"></script> -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+   <script src="funciones/preload_agregaModals.js"></script>
+  <script src="package/amcharts4/core.js"></script>
+  <script src="package/amcharts4/charts.js"></script>
+  <script src="package/amcharts4/themes/animated.js"></script>
+  <script src="package/amcharts4/plugins/forceDirected.js"></script>
+  <!-- <script src="https://cdn.amcharts.com/lib/4/plugins/forceDirected.js"></script> -->
+ <!--  <script src="https://cdn.amcharts.com/lib/4/core.js"></script>
+  <script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
+  <script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script> -->
+  <script src="//cdn.amcharts.com/lib/4/plugins/bullets.js"></script>
+  <script src="https://cdn.amcharts.com/lib/4/plugins/timeline.js"></script>
+
+
+  <script src="funciones/efectosubtitulo.js"></script>
+
+  <script src="funciones/todo_js.js"></script>
+
+
+
+
+    </body>
+</html>
