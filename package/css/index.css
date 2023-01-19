@@ -1,0 +1,97 @@
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  background-color: #ffffff;
+  overflow: hidden;
+  margin: 0;
+  font-size: 20px;
+}
+
+#chartdivtwe {
+  width: 100%;
+  height: 600px;
+}
+
+#chartdiv {
+  width: 100%;
+ /*  height: 100%;*/
+  /*height: 80vh;*/
+  /*height: 100%;*/
+  /*height: 100px;*/
+}
+
+#chartdivtreemap {
+  width: 100%;
+  /*height: 80vh;*/
+  height: 200px;
+
+  /*height: 100%;*/
+}
+#chartdivtree2{
+/*  width: 100%;*/
+/*  height: 600px;*/
+  width: 100%;
+/*  height: 550px;*/
+   height: 80vh;
+
+}
+#chartdivmodal{
+  width: 100%;
+  height: 600px;
+}
+.myButton {
+    cursor:pointer;
+    background-color: #fff;
+    width:100px;
+    height:100px;
+    boborder-width: 1px;
+    border-style: solid;
+}
+.myButton.active {
+    background-color: #f00;
+    -ms-transition-duration: 0.2s;
+    -ms-transform: scale(0.95);
+    -webkit-transition-duration: 0.2s;
+    -webkit-transform: scale(0.95);
+    -moz-transition-duration: 0.2s;
+    -moz-transform: scale(0.95);
+    -o-transition-duration: 0.2s;
+    -o-transform: scale(0.95);
+}
+
+/*nuevo*/
+#contenedor_carga{
+    background-color: rgba(250, 240, 245, 0.9);
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    -webkit-transition: all 5s ease;
+    -o-transition: all 5s ease;
+    transition: all 5s ease;
+    z-index: 10000;
+
+}
+
+#carga {
+    border: 15px solid #ccc;
+    border-top-color: #1565c0 ;
+    border-top-style: groove;
+    height: 100px;
+    width: 100px;
+    border-radius: 100%;
+
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+
+    -webkit-animation: girar 3.5s infinite;
+    -o-animation: girar 3s infinite;
+    animation: girar 3s infinite;
+}
+
+@keyframes girar {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg);   }
+}

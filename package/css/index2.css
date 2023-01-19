@@ -1,0 +1,117 @@
+/*svg {
+    display: block;
+    font: 10.5em 'Montserrat';
+    width: 960px;
+    height: 300px;
+    margin: 0 auto;
+}
+
+#efectonuevto {
+
+
+}
+
+.text-copy {
+    fill: none;
+    stroke: white;
+    stroke-dasharray: 6% 29%;
+    stroke-width: 5px;
+    stroke-dashoffset: 0%;
+    animation: stroke-offset 5.5s infinite linear;
+}
+
+.text-copy:nth-child(1){
+  stroke: #caf0f8;
+  animation-delay: -1;
+}
+
+.text-copy:nth-child(2){
+  stroke: #03045e;
+  animation-delay: -2s;
+}
+
+.text-copy:nth-child(3){
+  stroke: #0077b6;
+  animation-delay: -3s;
+}
+
+.text-copy:nth-child(4){
+  stroke: #90e0ef;
+  animation-delay: -4s;
+}
+
+.text-copy:nth-child(5){
+  stroke: #00b4d8;
+  animation-delay: -5s;
+}
+.text:nth-child(5n + 6) {
+
+  stroke: #466c8;
+  -webkit-animation-delay: -7.5s;
+  animation-delay: -7.5s;
+}
+@keyframes stroke-offset{
+  100% {stroke-dashoffset: -35%;}
+}*/
+
+
+.anim-text-flow,
+.anim-text-flow-hover:hover {
+  /*
+   * Animation variables
+   */
+  $animationSteps: 20;
+  $animationDuration: 50;
+  $animationElement: span;
+  $animationElementsCount: 100;
+  $delayBetweenLetters: 0.2;
+
+  /*
+   * Elements settings
+   */
+  #{$animationElement} {
+    animation-name: anim-text-flow-keys;
+    animation-duration: #{$animationDuration}s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    animation-fill-mode: forwards;
+  }
+
+  /*
+   * Keyframe loop
+   */
+  @keyframes anim-text-flow-keys {
+    @for $i from 0 through $animationSteps {
+      #{percentage($i * (1 / $animationSteps))} {
+        color: hsla(random(200), 100, 50, 1);
+      }
+    }
+  }
+
+  /*
+   * Element animation delay loop
+   */
+  $totalDelayTime: $animationElementsCount * $delayBetweenLetters;
+
+  @for $i from 1 through $animationElementsCount {
+    #{$animationElement}:nth-of-type(#{$i}) {
+      animation-delay: #{($i * $delayBetweenLetters) - $totalDelayTime}s;
+    }
+  }
+}
+
+
+.txt {
+  display: block;
+}
+
+a { 
+  text-decoration: none;
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  text-align: right;
+  color: #eee;
+  font-size: 15px;
+  line-height: 15px;
+}
